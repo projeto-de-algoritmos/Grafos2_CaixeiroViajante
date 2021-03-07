@@ -3,18 +3,38 @@
 #define INFINITO 9999
 #define MAX 10
  
+void addEdge(int x, int y, int G[MAX][MAX]); 
 void dijkstra(int G[MAX][MAX],int n,int noInicial);
  
 int main()
 {
-	int G[MAX][MAX],i,j,n,u;
+	int G[MAX][MAX],i,j,n,u,x,y;
 	printf("Digite o numéro de vertices desejadas: "); //Recebendo o numero de vertice.
 	scanf("%d",&n);
-	printf("\nDigite a matriz de adjacência: \n"); //Matriz de adjacência.
-	
-	for(i=0;i<n;i++)
-		for(j=0;j<n;j++)
-			scanf("%d",&G[i][j]);
+
+
+	//Inicializando a Matriz
+	for(i=0;i<n;i++){
+		for(j=0;j<n;j++){
+			if(i == j){
+				G[i][j] = 1;
+			}else{
+				G[i][j] = 0;
+			}
+			
+		}
+	}
+
+
+	printf("\nInforme as adjacencias (termine com EOF): \n"); //Lendo as adjacencias
+	while(scanf("%d %d", &x, &y) == 2){
+		if(x < n && y < n){
+			addEdge(x, y, G);
+		}else{
+			printf("Valor invalido!\n");
+		}
+	}
+
 	
 	printf("\nDigite o nó inicial: "); //Inserindo o nó inicial.    
 	scanf("%d",&u);
@@ -23,6 +43,14 @@ int main()
 	printf("\n");
 	
 	return 0;
+}
+
+//Função de adicionar aresta
+void addEdge(int x, int y, int G[MAX][MAX]){
+	G[x][y] = 1;
+	G[y][x] = 1;
+
+	return;
 }
 
 
@@ -91,7 +119,7 @@ void dijkstra(int G[MAX][MAX],int n,int noInicial)
 			do
 			{
 				j=predecessor[j];
-				printf("<- %d ", j);
+				printf("<-%d", j);
 			}while(j != noInicial);
 	}
 }
